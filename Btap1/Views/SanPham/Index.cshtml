@@ -1,0 +1,198 @@
+﻿@model IEnumerable<Btap1.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0 auto;
+            font-family: Arial;
+        }
+
+        body {
+            margin: 0 50px;
+        }
+
+        .header {
+            padding: 20px;
+            color: #737373;
+            justify-items: center;
+            align-items: center;
+            box-shadow: 0 2px 0 0 gray;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        p {
+            padding: 10px;
+        }
+
+        .mennu-header .menu-items a {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .mennu-header .left {
+            color: #d72828;
+            font-size: 25px;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .product-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .product-list li {
+                display: inline-block;
+                padding: 20px;
+                flex: 1;
+                text-align: center;
+            }
+
+            .product-list li img {
+                width: 300px;
+            }
+
+            .product-list li h2 {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .product-list li .price {
+                font-size: 16px;
+                color: #d72828;
+                font-weight: bold;
+            }
+
+            .product-list .name-Product {
+                font-size: 20px;
+                font-weight: 100;
+            }
+
+            .product-list .saleoff-product {
+                width: 35px;
+                height: 25px;
+                color: white;
+                padding: 10px;
+                background-color: #d72828;
+                border-radius: 50%;
+                position: absolute;
+                margin-top: -23%;
+                margin-left: 15px;
+                justify-items: center;
+                align-items: center;
+            }
+
+        .image-add-to-cart img {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        .image-add-to-cart .add-to-cart {
+            position: absolute;
+            width: 280px;
+            display: none;
+            margin-top: -38px;
+            padding: 10px;
+            background-color: #404040;
+            color: #fff;
+        }
+
+        .image-add-to-cart .fa-heart{
+            display: none;
+            margin-left: 10px;
+            position: absolute;
+            margin: -260px 0px 0px 250px;
+            color: #404040;
+            background-color: #f9f9f9;
+            border-radius: 50%;
+            padding: 10px;
+        }
+        .image-add-to-cart .fa-eye{
+            display: none;
+            margin-left: 10px;
+            position: absolute;
+            margin: -220px 0px 0px 250px;
+            color: #404040;
+            background-color: #f9f9f9;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .image-add-to-cart:hover .add-to-cart {
+            display: block;
+        }
+        .image-add-to-cart:hover .fa-heart,
+        .image-add-to-cart:hover .fa-eye{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <ul class="mennu-header">
+            <li class="menu-items left">-</li>
+            <li class="menu-items" style="color: black"><a>NEW PRODUCT</a></li>
+            <li class="menu-items"<a>ON SALE</a></li>
+            <li class="menu-items"><a>FEATRUED PRODUCT</a></li>
+        </ul>
+    </div>
+    <main class="container">
+        <section class="product-list">
+            <ul>
+                @foreach (var product in Model)
+                {
+                    <li>
+                        <div class="image-add-to-cart">
+                            <img src="~/Upload/@product.image" alt="@product.id" class="product-image">
+                            <a href="#" class="add-to-cart">ADD TO CART</a>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        @if (@product.saleoff == 0)
+                        {
+                            <p class="price">$@product.price</p>
+                        }
+                        else
+                        {
+                            <p class="price">$@product.price   <s>$@product.cost</s></p>
+                        }
+                        <h5 class="name-Product">@product.nameProduct</h5>
+                        @if (@product.saleoff != 0)
+                        {
+                            decimal saleoffDecimal = Convert.ToDecimal(product.saleoff);
+                            int saleoffInt = (int)Math.Floor(saleoffDecimal);
+                            <p class="saleoff-product">-@saleoffInt%</p>
+                        }
+                    </li>
+                }
+            </ul>
+        </section>
+    </main>
+
+</body>
+</html>
+
